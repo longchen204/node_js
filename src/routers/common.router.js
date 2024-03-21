@@ -9,4 +9,8 @@ router.get("/tintuc", (req, res) => {
   res.send("Tin Tức");
 });
 
+router.get("/lienhe", (req, res) => {
+  res.send("Trang liên hệ");
+});
+
 export default router;
