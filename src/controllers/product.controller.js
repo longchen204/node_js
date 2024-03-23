@@ -8,14 +8,16 @@ import product from "../models/product.model.js";
 import category from "../models/category.model.js";
 // [GET] /product
 export function index(req, res) {
+  const filter = {};
+  const request = req.query.request;
   product
-    .find()
+    .find({ name: request })
     .populate("categoryId")
     .then((data) => {
-      res.json(data);
+      res.status(200).json(data);
     })
     .catch(() => {
-      res.json({ Message: "Có lỗi sảy ra" });
+      res.status(500).json({ Message: "Có lỗi sảy ra" });
     });
 }
 
@@ -27,13 +29,13 @@ export function getById(req, res) {
       .findById(id)
       .populate("categoryId")
       .then((data) => {
-        res.json(data);
+        res.status(200).json(data);
       })
       .catch(() => {
-        res.json({ Message: "Không tìm thấy sản phẩm" });
+        res.status(400).json({ Message: "Không tìm thấy sản phẩm" });
       });
   } else {
-    res.json({ Message: "Có lỗi sảy ra" });
+    res.status(400).json({ Message: "Có lỗi sảy ra" });
   }
 }
 
@@ -44,13 +46,13 @@ export function postProduct(req, res) {
     product
       .create(productNew)
       .then((data) => {
-        res.json(data);
+        res.status(201).json(data);
       })
       .catch(() => {
-        res.json({ Message: "Có lỗi sảy ra" });
+        res.status(500).json({ Message: "Có lỗi sảy ra" });
       });
   } else {
-    res.json({ Message: "Không thể thực hiện " });
+    res.status(400).json({ Message: "Không thể thực hiện " });
   }
 }
 

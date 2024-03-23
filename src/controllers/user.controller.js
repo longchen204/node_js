@@ -4,10 +4,10 @@ export function userIndex(req, res) {
   user
     .find()
     .then((data) => {
-      res.json(data);
+      res.status(200).json(data);
     })
     .catch(() => {
-      res.json({ Message: "Có lỗi" });
+      res.status(500).json({ Message: "Có lỗi" });
     });
 }
 
@@ -19,8 +19,8 @@ export function getIdUser(req, res) {
       .then((data) => {
         res.json(data);
       })
-      .catch(() => {
-        res.json({ Message: "Có lỗi sảy ra" });
+      .catch((err) => {
+        res.json({ Message: err });
       });
   } else {
     res.json({ Message: "không tìm thấy sản phẩm" });
@@ -33,13 +33,16 @@ export function postUser(req, res) {
     user
       .create(userNew)
       .then((data) => {
-        res.json(data);
+        res.status(201).json({
+          Message: "Thêm thành công",
+          data,
+        });
       })
-      .catch(() => {
-        res.json({ Message: "Lỗi rồi" });
+      .catch((err) => {
+        res.status(400).json({ Message: err });
       });
   } else {
-    res.json({ Message: "Có lỗi sảy ra" });
+    res.status(400).json({ Message: "Có lỗi sảy ra" });
   }
 }
 
